@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.shareit.client.BaseClient;
+import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Map;
 
 @Service
 public class ItemClient extends BaseClient {
@@ -34,50 +36,44 @@ public class ItemClient extends BaseClient {
         return post("",userId,itemDto);
     }
 
-    /*@PatchMapping(path = "/{itemId}")
-    public ItemDto upItem(@RequestBody ItemDto itemDto,
-                          @PathVariable Long itemId,
-                          @RequestHeader("X-Sharer-User-Id") Long userId
-    ) {
-        return itemService.upItem(
-                Patch.patchItemDto(itemService.getItem(itemId, userId), itemDto),
-                itemId,
-                userId
+    public ResponseEntity<Object> upItem(ItemDto itemDto, Long itemId, Long userId) {
+        Map<String, Object> parameters = Map.of(
+                "itemId", itemId
         );
-    }*/
-/*
-    @GetMapping("/{itemId}")
-    public ItemDto getItemByRequestUsers(@PathVariable Long itemId,
-                                         @RequestHeader("X-Sharer-User-Id") Long userIdMakesRequest
-    ) {
-        return itemService.getItemByRequestUsers(itemId, userIdMakesRequest);
-    }*/
-
-/*
-    @GetMapping
-    public Collection<ItemDto> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                @RequestParam(defaultValue = "0") Integer from,
-                                                @RequestParam(defaultValue = "10") Integer size
-    ) {
-        return itemService.getItemsByUserId(userId, from, size);
+        return patch("/{itemId}",userId,parameters,itemDto);
     }
-*/
 
-/*    @GetMapping("/search")
-    public Collection<ItemDto> search(@RequestParam String text,
-                                      @RequestHeader("X-Sharer-User-Id") Long userId,
-                                      @RequestParam(defaultValue = "0") Integer from,
-                                      @RequestParam(defaultValue = "10") Integer size
-    ) {
+    public ResponseEntity<Object> getItemByRequestUsers(Long itemId, Long userIdMakesRequest) {
+        Map<String, Object> parameters = Map.of(
+                "itemId", itemId
+        );
+        return get("/{itemId}",userIdMakesRequest,parameters);
+    }
 
-        return itemService.search(text,userId,from,size);
-    }*/
 
-    /*@PostMapping("/{itemId}/comment")
-    public CommentDto addComment(@RequestBody @Valid CreateCommentDto createCommentDto,
-                                 @PathVariable Long itemId,
-                                 @RequestHeader("X-Sharer-User-Id") Long authorId) {
+    public ResponseEntity<Object> getItemsByUserId(Long userId, Integer from, Integer size) {
+        Map<String, Object> parameters = Map.of(
+                "from", from,
+                "size", size
+        );
+        return get("/?from={from}&size={size}",userId,parameters);
+    }
 
-        return itemService.addComment(createCommentDto,itemId,authorId);
-    }*/
+    public ResponseEntity<Object> search(String text, Long userId, Integer from, Integer size) {
+        Map<String, Object> parameters = Map.of(
+                "text", text,
+                "from", from,
+                "size", size
+        );
+        return get("/search?&text={text}&from={from}&size={size}",userId,parameters);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public ResponseEntity<Object> addComment(CreateCommentDto createCommentDto, Long itemId, Long authorId) {
+
+        Map<String, Object> parameters = Map.of(
+                "itemId", itemId
+        );
+        return post("/{itemId}/comment",authorId,parameters,createCommentDto);
+    }
 }

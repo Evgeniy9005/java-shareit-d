@@ -6,9 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
 
 @Controller
@@ -26,48 +29,47 @@ public class ItemController {
         return itemClient.addItem(itemDto,userId);
     }
 
-    /*@PatchMapping(path = "/{itemId}")
-    public ItemDto upItem(@RequestBody ItemDto itemDto,
-                          @PathVariable Long itemId,
-                          @RequestHeader("X-Sharer-User-Id") Long userId
+    @PatchMapping(path = "/{itemId}")
+    public ResponseEntity<Object> upItem(@RequestBody ItemDto itemDto,
+                                         @Positive @PathVariable Long itemId,
+                                         @Positive @RequestHeader("X-Sharer-User-Id") Long userId
     ) {
-        return itemService.upItem(
-                Patch.patchItemDto(itemService.getItem(itemId, userId), itemDto),
-                itemId,
-                userId
-        );
-    }*/
-
-   /* @GetMapping("/{itemId}")
-    public ItemDto getItemByRequestUsers(@PathVariable Long itemId,
-                                         @RequestHeader("X-Sharer-User-Id") Long userIdMakesRequest
-    ) {
-        return itemService.getItemByRequestUsers(itemId, userIdMakesRequest);
+        log.info("Обновление вещи {} , {}",itemId,itemDto);
+        return itemClient.upItem(itemDto,itemId,userId);
     }
-*/
-   /* @GetMapping
-    public Collection<ItemDto> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                @RequestParam(defaultValue = "0") Integer from,
-                                                @RequestParam(defaultValue = "10") Integer size
-    ) {
-        return itemService.getItemsByUserId(userId, from, size);
-    }
-*/
-    /*@GetMapping("/search")
-    public Collection<ItemDto> search(@RequestParam String text,
-                                      @RequestHeader("X-Sharer-User-Id") Long userId,
-                                      @RequestParam(defaultValue = "0") Integer from,
-                                      @RequestParam(defaultValue = "10") Integer size
-    ) {
 
-        return itemService.search(text,userId,from,size);
+    @GetMapping("/{itemId}")
+    public ResponseEntity<Object> getItemByRequestUsers(@Positive @PathVariable Long itemId,
+                                                        @Positive @RequestHeader("X-Sharer-User-Id") Long userIdMakesRequest
+    ) {
+        log.info("Вернуть вещь {} для пользователя {}",itemId,userIdMakesRequest);
+        return itemClient.getItemByRequestUsers(itemId, userIdMakesRequest);
     }
-*/
-   /* @PostMapping("/{itemId}/comment")
-    public CommentDto addComment(@RequestBody @Valid CreateCommentDto createCommentDto,
-                                 @PathVariable Long itemId,
-                                 @RequestHeader("X-Sharer-User-Id") Long authorId) {
 
-        return itemService.addComment(createCommentDto,itemId,authorId);
-    }*/
+    @GetMapping
+    public ResponseEntity<Object> getItemsByUserId(@Positive @RequestHeader("X-Sharer-User-Id") Long userId,
+                                                   @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                   @Positive @RequestParam(defaultValue = "10") Integer size
+    ) {
+        log.info("Вернуть вещи пользователя {} от {} до {}",userId,from,size);
+        return itemClient.getItemsByUserId(userId, from, size);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> search(@RequestParam String text,
+                                         @RequestHeader("X-Sharer-User-Id") Long userId,
+                                         @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                         @Positive @RequestParam(defaultValue = "10") Integer size
+    ) {
+        log.info("Найти вещи по тексту ({}) по запросу пользователя {} от {} до {}",text,userId,from,size);
+        return itemClient.search(text,userId,from,size);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public ResponseEntity<Object> addComment(@RequestBody @Valid CreateCommentDto createCommentDto,
+                                             @Positive @PathVariable Long itemId,
+                                             @Positive @RequestHeader("X-Sharer-User-Id") Long authorId) {
+        log.info("Добавить комментарий {} на вещь {} от пользователя {}",createCommentDto,itemId,authorId);
+        return itemClient.addComment(createCommentDto,itemId,authorId);
+    }
 }

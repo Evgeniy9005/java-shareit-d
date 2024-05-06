@@ -2,7 +2,6 @@ package ru.practicum.shareit.patch;
 
 import ru.practicum.shareit.item.booking.IndicatorBooking;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import javax.validation.Valid;
@@ -28,7 +27,7 @@ public class Patch {
        String name = patch.getName();
        String description = patch.getDescription();
        Boolean available = patch.getAvailable();
-       User owner = patch.getOwner();
+       UserDto owner = patch.getOwner();
        Long request = patch.getRequestId();
        IndicatorBooking lastBooking = patch.getLastBooking();
        IndicatorBooking nextBooking = patch.getNextBooking();

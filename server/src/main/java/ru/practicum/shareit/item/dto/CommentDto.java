@@ -3,7 +3,6 @@ package ru.practicum.shareit.item.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ru.practicum.shareit.item.model.Item;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,8 +13,6 @@ public class CommentDto {
     private final long id;
 
     private final String text;
-
-    private final Item item;
 
     private final String authorName;
 

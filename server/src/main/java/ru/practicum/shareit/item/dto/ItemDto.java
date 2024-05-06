@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.item.booking.IndicatorBooking;
 import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.dto.UserDto;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class ItemDto {
     @NotNull
     private final Boolean available;
 
-    private final User owner;
+    private final UserDto owner;
 
     private final Long requestId;
 

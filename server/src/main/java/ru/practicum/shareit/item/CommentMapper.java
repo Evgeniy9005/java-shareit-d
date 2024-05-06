@@ -6,6 +6,7 @@ import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.model.Comment;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
@@ -17,5 +18,9 @@ public interface CommentMapper {
         return comment.getAuthor().getName();
     }
 
-    List<CommentDto> toCommentDtoList(List<Comment> comments);
+   // List<CommentDto> toCommentDtoList(List<Comment> comments);
+
+    default List<CommentDto> toCommentDtoList(List<Comment> comments) {
+        return comments.stream().map(comment -> toCommentDto(comment)).collect(Collectors.toList());
+    }
 }

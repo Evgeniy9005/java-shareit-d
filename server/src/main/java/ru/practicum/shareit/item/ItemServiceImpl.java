@@ -20,7 +20,10 @@ import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.UserMapper;
 import ru.practicum.shareit.user.dao.UserRepository;
+import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.util.Util;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,6 +38,8 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemMapper itemMapper;
 
+  //  private final UserMapper userMapper;
+
     private final CommentMapper commentMapper;
 
     private final ItemRepository itemRepository;
@@ -48,13 +53,14 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ItemDto addItem(ItemDto itemDto, long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException("При добавлении вещи не найден пользователь под id = " + userId));
+
+      //  UserDto userDto = userMapper.toUserDto(user);
 
         Item newItem = itemRepository.save(
-                itemMapper.toItem(itemDto.toBuilder().owner(
-                        userRepository.findById(userId).orElseThrow(
-                                () -> new NotFoundException(
-                                        "При добовлении вещи не найден пользователь под id = " + userId))
-                ).build())
+               // itemMapper.toItem(itemDto.toBuilder().owner(userDto).build())
+                itemMapper.toItem(itemDto).toBuilder().owner(user).build()
         );
 
         log.info("Добавлена вещь {}",newItem);
