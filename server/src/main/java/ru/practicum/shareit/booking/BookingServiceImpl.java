@@ -179,8 +179,8 @@ public class BookingServiceImpl implements BookingService {
                 );
                 log.info("Вернулись брони вещей в количестве = {}, c параметром выборки {}", bookingList.size(), state);
                 return bookingList;
-            case "UNSUPPORTED_STATUS":
-                throw new UnsupportedStatusException("Unknown state: UNSUPPORTED_STATUS");
+            /*case "UNSUPPORTED_STATUS":
+                throw new UnsupportedStatusException("Unknown state: UNSUPPORTED_STATUS");*/
             default:
                 bookingList = getElementsFrom(bookingRepository.findByBookerIdOrderByStartDesc(userId,page), start);
                 log.info("Вернулись брони вещей в количестве = {}, по умолчанию!", bookingList.size());
@@ -238,8 +238,8 @@ public class BookingServiceImpl implements BookingService {
                 log.info("Вернулись брони вещей в количестве {}, " +
                         "запрошенных владельцем {} броней со статусом PAST",bookingOwnerList.size(),userId);
                 return bookingOwnerList;
-            case "UNSUPPORTED_STATUS":
-                throw new UnsupportedStatusException("Unknown state: UNSUPPORTED_STATUS");
+            /*case "UNSUPPORTED_STATUS":
+                throw new UnsupportedStatusException("Unknown state: UNSUPPORTED_STATUS");*/
             default:
                 bookingOwnerList = getElementsFrom(
                         bookingRepository.findByItemOwnerIdOrderByStartDesc(userId,page),start
