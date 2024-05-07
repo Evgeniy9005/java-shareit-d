@@ -19,8 +19,7 @@ public class ErrorHandler {
         );
     }*/
 
-
-  /*  @ExceptionHandler
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handle(final BadRequestException e) {
         log.debug("Получен статус 400 Bad request {}",e.getMessage(),e);
@@ -28,7 +27,6 @@ public class ErrorHandler {
                 e.getClass().getName(), e.getMessage()
         );
     }
-*/
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handle(final UnsupportedStatusException e) {

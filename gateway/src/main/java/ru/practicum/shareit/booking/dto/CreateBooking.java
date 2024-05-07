@@ -4,9 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -19,10 +16,10 @@ public class CreateBooking {
     @NotNull
     private final Long itemId;
 
-    @FutureOrPresent
+    @NotNull
     private final LocalDateTime start;
 
-    @Future
+    @NotNull
     private final LocalDateTime end;
 
 }

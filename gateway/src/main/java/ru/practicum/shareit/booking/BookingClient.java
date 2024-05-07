@@ -10,6 +10,9 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.booking.dto.CreateBooking;
 import ru.practicum.shareit.client.BaseClient;
+import ru.practicum.shareit.excteption.BadRequestException;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -46,7 +49,7 @@ public class BookingClient extends BaseClient {
 */
  //------------------------------------------------------------
     public ResponseEntity<Object> addBooking(CreateBooking createBooking, Long userId) {
-
+        validDate(createBooking);
         return post("", userId, createBooking);
     }
 
@@ -81,5 +84,28 @@ public class BookingClient extends BaseClient {
                 "size", size
         );
         return get("/owner?state={state}&from={from}&size={size}",userId,parameters);
+    }
+
+        private void validDate(CreateBooking createBooking) {
+        LocalDateTime start = createBooking.getStart();
+        LocalDateTime end = createBooking.getEnd();
+
+        int equals = start.compareTo(end);
+
+        if (equals == 0) {
+            throw new BadRequestException(
+                    String.format("Время начала %s бронирования не может быть равно времени окончания %s",start,end)
+            );
+        }
+
+        if (equals > 0) {
+            throw new BadRequestException(
+                    String.format("Время начала %s бронирования не может быть позже времени окончания %s",start,end)
+            );
+        }
+
+        if (start.compareTo(LocalDateTime.now()) < 0) {
+            throw new BadRequestException( String.format("Время начала %s бронирования не может быть в прошлом!",start));
+        }
     }
 }
