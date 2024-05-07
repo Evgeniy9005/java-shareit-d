@@ -38,8 +38,6 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemMapper itemMapper;
 
-  //  private final UserMapper userMapper;
-
     private final CommentMapper commentMapper;
 
     private final ItemRepository itemRepository;
@@ -56,10 +54,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException("При добавлении вещи не найден пользователь под id = " + userId));
 
-      //  UserDto userDto = userMapper.toUserDto(user);
-
         Item newItem = itemRepository.save(
-               // itemMapper.toItem(itemDto.toBuilder().owner(userDto).build())
                 itemMapper.toItem(itemDto).toBuilder().owner(user).build()
         );
 
@@ -106,7 +101,7 @@ public class ItemServiceImpl implements ItemService {
 
         Sort sortById = Sort.by(Sort.Direction.ASC,"id");
 
-        Pageable page = Util.validPageParam(from,size,sortById);
+        Pageable page = Util.createPageParam(from,size,sortById);
 
         List<Item> itemList = getElementsFrom(itemRepository.findByOwnerId(userId,page),Util.start(from,size));
 
@@ -182,7 +177,7 @@ public class ItemServiceImpl implements ItemService {
         return new ArrayList<>(0);
         }
 
-        Pageable page = Util.validPageParam(from,size);
+        Pageable page = Util.createPageParam(from,size);
 
         return getElementsFrom(
                 itemRepository.searchByIgnoreCaseDescriptionContainingAndAvailableTrue(text,page).stream()

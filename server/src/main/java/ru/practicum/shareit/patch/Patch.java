@@ -8,8 +8,6 @@ import javax.validation.Valid;
 
 public class Patch {
 
-
-    @Valid
     public static UserDto patchUserDto(UserDto updated, UserDto patch) {
         Long id = patch.getId();
         String name = patch.getName();
@@ -21,7 +19,6 @@ public class Patch {
                 .build();
     }
 
-    @Valid
     public static ItemDto patchItemDto(ItemDto updated, ItemDto patch) {
        Long id = patch.getId();
        String name = patch.getName();

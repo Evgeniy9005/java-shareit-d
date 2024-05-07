@@ -18,13 +18,10 @@ public class ItemDto {
 
     private final Long id;
 
-    @NotBlank
     private final String name;
 
-    @NotBlank
     private final String description;
 
-    @NotNull
     private final Boolean available;
 
     private final UserDto owner;

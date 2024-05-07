@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class Util {
 
-    public static PageRequest validPageParam(int from, int size) {
-        validFromSize(from,size);
+    public static PageRequest createPageParam(int from, int size) {
+       // validFromSize(from,size);
         PageRequest pageRequest;
         if (from > 0) {
             pageRequest = PageRequest.of(from / size,size);
@@ -27,9 +27,9 @@ public class Util {
     }
 
 
-    public static PageRequest validPageParam(int from, int size, Sort sort) {
+    public static PageRequest createPageParam(int from, int size, Sort sort) {
 
-        validFromSize(from,size);
+       // validFromSize(from,size);
         PageRequest pageRequest;
         if (from > 0) {
             pageRequest = PageRequest.of(from / size,size,sort);
@@ -42,7 +42,7 @@ public class Util {
     }
 
     public static int start(int from, int size) {
-        validFromSize(from,size);
+      //  validFromSize(from,size);
 
         if (from > 0) {
             log.info("start {}",from  % size);
@@ -52,12 +52,12 @@ public class Util {
         return 0;
     }
 
-    private static void validFromSize(int from, int size) {
+    /*private static void validFromSize(int from, int size) {
         if (from < 0 || size < 1) {
             throw new BadRequestException(
                     "Не верно заданы входные параметры для отображения данных в диапазоне от # до #  ", from, size);
         }
-    }
+    }*/
 
     public static <T> List<T> getElementsFrom(List<T> list,int start) {
 

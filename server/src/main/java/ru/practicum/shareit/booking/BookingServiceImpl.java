@@ -10,13 +10,9 @@ import ru.practicum.shareit.booking.dao.BookingRepository;
 import ru.practicum.shareit.booking.dto.CreateBooking;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.exception.UnsupportedStatusException;
-import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.dao.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.UserMapper;
 import ru.practicum.shareit.user.dao.UserRepository;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public Booking addBooking(CreateBooking createBooking, Long userId) {
 
-    validDate(createBooking);
+   // validDate(createBooking);
 
     Item item = itemRepository.findById(createBooking.getItemId())
             .orElseThrow(() -> new NotFoundException("Не найдена, при бронировании вещь!"));
@@ -142,7 +138,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Не найден пользователь # при запросе всех бронирований вещей", userId);
         }
 
-        Pageable page = validPageParam(from,size);
+        Pageable page = createPageParam(from,size);
 
         int start = start(from,size);
 
@@ -196,7 +192,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Не найден пользователь # при запросе бронирований этим пользователем", userId);
         }
 
-        Pageable page = validPageParam(from,size);
+        Pageable page = createPageParam(from,size);
 
         int start = start(from,size);
 
@@ -251,7 +247,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private void validDate(CreateBooking createBooking) {
+    /*private void validDate(CreateBooking createBooking) {
         LocalDateTime start = createBooking.getStart();
         LocalDateTime end = createBooking.getEnd();
 
@@ -272,5 +268,5 @@ public class BookingServiceImpl implements BookingService {
         if (start.compareTo(LocalDateTime.now()) < 0) {
             throw new BadRequestException("Время начала # бронирования не может быть в прошлом!",start);
         }
-    }
+    }*/
 }

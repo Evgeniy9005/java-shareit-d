@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
         Sort sortById = Sort.by(Sort.Direction.ASC,"id");
 
-        Pageable page = Util.validPageParam(from,size,sortById);
+        Pageable page = Util.createPageParam(from,size,sortById);
 
         List<UserDto> set = Util.getElementsFrom(userRepository.findAll(page).stream()
                 .map(user -> userMapper.toUserDto(user))

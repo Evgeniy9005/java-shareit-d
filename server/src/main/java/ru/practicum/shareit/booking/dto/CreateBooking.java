@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CreateBooking {
 
-    @NotNull
+
     private final Long itemId;
 
-    @NotNull
+
     private final LocalDateTime start;
 
-    @NotNull
+
     private final LocalDateTime end;
 
 }

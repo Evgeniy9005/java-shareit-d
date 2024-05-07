@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.patch.Patch;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import javax.validation.Valid;
@@ -26,16 +27,16 @@ public class UserController {
     public ResponseEntity<Object> addUser(@RequestBody @Valid UserDto userDto) {
 
         ResponseEntity<Object> user = userClient.addUser(userDto);
-        log.info("Создать пользователя {}",user.getBody());
+        log.info("Создать пользователя {}", userDto);
         return user;
     }
 
     @PatchMapping("/{userId}")
     public ResponseEntity<Object> upUser(@RequestBody UserDto userDto,
-                          @Positive @PathVariable Long userId
+                                         @Positive @PathVariable Long userId
     ) {
         log.info("Обновление пользователя {}",userId);
-        return userClient.upUser(userDto,userId);
+        return userClient.upUser(Patch.patchUserDto(userDto),userId);
     }
 
     @DeleteMapping("/{userId}")

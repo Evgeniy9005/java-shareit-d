@@ -27,7 +27,7 @@ public class BookingController {
     private final BookingMapper mapper;
 
     @PostMapping
-    public BookingDto addBooking(@RequestBody @Valid CreateBooking createBooking,
+    public BookingDto addBooking(@RequestBody CreateBooking createBooking,
                                  @RequestHeader("X-Sharer-User-Id") Long userId
     ) {
         Booking booking =  bookingService.addBooking(createBooking, userId);

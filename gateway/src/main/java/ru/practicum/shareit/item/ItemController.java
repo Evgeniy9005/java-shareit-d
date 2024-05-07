@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.patch.Patch;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -35,7 +36,7 @@ public class ItemController {
                                          @Positive @RequestHeader("X-Sharer-User-Id") Long userId
     ) {
         log.info("Обновление вещи {} , {}",itemId,itemDto);
-        return itemClient.upItem(itemDto,itemId,userId);
+        return itemClient.upItem(Patch.patchItemDto(itemDto),itemId,userId);
     }
 
     @GetMapping("/{itemId}")

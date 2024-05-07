@@ -88,7 +88,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                     "Не найден пользователь # при запросе запрашиваемых вещей в диапазоне от # до #!",userId,from,size);
         }
 
-        Pageable page = Util.validPageParam(from,size);
+        Pageable page = Util.createPageParam(from,size);
 
         if (repository.existsByRequester(userId)) {
             return new ArrayList<>();

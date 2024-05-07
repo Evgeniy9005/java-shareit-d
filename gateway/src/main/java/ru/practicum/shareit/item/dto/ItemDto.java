@@ -1,15 +1,16 @@
 package ru.practicum.shareit.item.dto;
 
+
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.user.dto.UserDto;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder(toBuilder = true)
 public class ItemDto {
     private final Long id;
 
@@ -30,7 +31,7 @@ public class ItemDto {
 
     private final IndicatorBooking nextBooking;
 
-   // @Builder.Default
+    @Builder.Default
     private final List<CommentDto> comments = new ArrayList<>();
 
 }

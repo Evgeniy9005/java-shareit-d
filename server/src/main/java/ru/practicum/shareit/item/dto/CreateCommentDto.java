@@ -12,6 +12,5 @@ public class CreateCommentDto {
 
     private final Long commentId;
 
-    @NotBlank
     private final String text;
 }
