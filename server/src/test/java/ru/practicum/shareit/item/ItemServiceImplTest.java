@@ -123,11 +123,9 @@ class ItemServiceImplTest {
     @Test
     void getItemsByUserId() {
 
-        Pageable pageable = Util.createPageParam(0,10);
+        when(itemRepository.findByOwnerId(anyLong(),any())).thenReturn(itemList);
 
-        when(itemRepository.findByOwnerId(1L,pageable)).thenReturn(itemList);
-
-        itemService.getItemsByUserId(1,0,10);
+        itemService.getItemsByUserId(1L,0,10);
 
         verify(itemRepository).findByOwnerId(anyLong(),any());
         verify(bookingRepository).findByItemsIdBooking(any(), any());

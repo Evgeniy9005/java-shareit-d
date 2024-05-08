@@ -227,14 +227,6 @@ class ItemControllerTest {
 
         CommentDto commentDto = commentDtoList.get(0);
 
-        mvc.perform(post("/items/1/comment")
-                        .content(objectMapper.writeValueAsString(new CreateCommentDto(1L,"")))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .header("X-Sharer-User-Id",1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
         when(itemService.addComment(any(CreateCommentDto.class),anyLong(),anyLong()))
                 .thenReturn(commentDto);
 

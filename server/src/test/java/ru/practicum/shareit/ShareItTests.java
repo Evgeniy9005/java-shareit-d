@@ -371,6 +371,7 @@ class ShareItTests {
 		Booking booking4 = createBooking(itemDto.getId(),itemDto.getOwner().getId(),userId5);
 		createBooking(itemDto.getId(),itemDto.getOwner().getId(),userId5);
 
+		sleep(2000);
 		CommentDto c1 = itemService.addComment(new CreateCommentDto(1L,"комментарий 1"),1,1);
 		CommentDto c2 = itemService.addComment(new CreateCommentDto(2L,"комментарий 2"),1,1);
 		CommentDto c3 = itemService.addComment(new CreateCommentDto(3L,"комментарий 3"),1,3);

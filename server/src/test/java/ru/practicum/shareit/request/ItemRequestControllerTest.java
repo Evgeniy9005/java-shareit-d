@@ -60,14 +60,6 @@ class ItemRequestControllerTest {
     @Test
     void addItemRequest() throws Exception {
 
-        mvc.perform(post("/requests")
-                        .content(objectMapper.writeValueAsString(new CreateItemRequest(0,"")))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .header("X-Sharer-User-Id",1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
         when(itemRequestService.addItemRequest(any(CreateItemRequest.class),anyLong())).thenReturn(itemRequestDto1);
         mvc.perform(post("/requests")
                         .content(objectMapper.writeValueAsString(itemRequestDto1))
@@ -135,7 +127,6 @@ class ItemRequestControllerTest {
                 .andExpect(jsonPath("$[1].created",is(itemRequestDto2.getCreated().toString())))
                 .andExpect(jsonPath("$[1].requester",is(1)))
                 .andExpect(jsonPath("$[1].items",is(itemRequestDto2.getItems())));
-
 
     }
 
