@@ -112,7 +112,7 @@ public class Data {
         if (type.equals(CommentDto.class)) {
             if (objects.length == 1) {
                 if (objects[0].getClass().equals(UserDto.class)) {
-                    UserDto userDto = (UserDto) objects[1];
+                    UserDto userDto = (UserDto) objects[0];
                     return (D) CommentDto.builder()
                             .id(i)
                             .text("Text" + i)
