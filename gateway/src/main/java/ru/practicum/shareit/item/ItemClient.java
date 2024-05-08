@@ -11,9 +11,6 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.shareit.client.BaseClient;
 import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-
-import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Map;
 
 @Service
